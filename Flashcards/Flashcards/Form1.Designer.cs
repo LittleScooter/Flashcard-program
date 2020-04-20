@@ -163,6 +163,7 @@
             this.btnStudDeck.Text = "Studera deck";
             this.btnStudDeck.UseVisualStyleBackColor = true;
             this.btnStudDeck.Visible = false;
+            this.btnStudDeck.Click += new System.EventHandler(this.btnStudDeck_Click);
             // 
             // tbxKortFråga
             // 
@@ -241,12 +242,13 @@
             // 
             // btnSkapaDeck
             // 
-            this.btnSkapaDeck.Location = new System.Drawing.Point(187, 77);
+            this.btnSkapaDeck.Location = new System.Drawing.Point(187, 94);
             this.btnSkapaDeck.Name = "btnSkapaDeck";
             this.btnSkapaDeck.Size = new System.Drawing.Size(75, 23);
             this.btnSkapaDeck.TabIndex = 14;
             this.btnSkapaDeck.Text = "Skapa deck";
             this.btnSkapaDeck.UseVisualStyleBackColor = true;
+            this.btnSkapaDeck.Click += new System.EventHandler(this.btnSkapaDeck_Click);
             // 
             // tbxDeckNamn
             // 

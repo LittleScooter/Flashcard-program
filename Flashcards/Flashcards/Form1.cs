@@ -12,12 +12,25 @@ namespace Flashcards
 {
     public partial class Form1 : Form
     {
+        List<Deck> decks = new List<Deck>();
+
         bool menyCheck;
         bool nyttDeckStart = false;
 
         public Form1()
         {
             InitializeComponent();
+
+            UpdateListbox();
+        }
+
+        private void UpdateListbox()
+        {
+            lbxDeckList.Items.Clear();
+            for(int i = 0; i < decks.Count; i++)
+            {
+                lbxDeckList.Items.Add(decks.ElementAt(i));
+            }
         }
 
         private void btnStudera_Click(object sender, EventArgs e)
@@ -123,7 +136,6 @@ namespace Flashcards
                 nyttDeckStart = true;
 
                 //Kolla igenom decket om korten har dubleter
-
             }
         }
 
@@ -145,11 +157,44 @@ namespace Flashcards
             DialogResult dialogResult = MessageBox.Show("Är du säker att du vill radera decket?", "", MessageBoxButtons.YesNo);
             if(dialogResult == DialogResult.Yes)
             {
-
+                decks.RemoveAt(lbxDeckList.SelectedIndex);
+                UpdateListbox();
             }
             else if (dialogResult == DialogResult.No)
             {
 
+            }
+        }
+
+        private void btnStudDeck_Click(object sender, EventArgs e)
+        {
+            lbxDeckList.Visible = false;
+            gbxDeckMeny.Visible = false;
+            btnStudDeck.Visible = false;
+            btnTillbaka.Visible = false;
+
+            //visa knappar och text for att studera
+        }
+
+        private void btnSkapaDeck_Click(object sender, EventArgs e)
+        {
+            if (tbxDeckNamn.Text == "")
+            {
+                MessageBox.Show("Du måste ge decket ett namn");
+            }
+            else
+            {
+                Deck nyttDeck = new Deck(tbxDeckNamn.Text);
+                decks.Add(nyttDeck);
+
+                tbxDeckNamn.Text = "";
+
+                UpdateListbox();
+
+                gbxDeckRed.Visible = false;
+                gbxDeckMeny.Visible = true;
+                lbxDeckList.Visible = true;
+                btnTillbaka.Visible = true;
             }
         }
     }
