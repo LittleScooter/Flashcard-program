@@ -18,6 +18,7 @@ namespace Flashcards
         public string Namn
         {
             get { return namn; }
+            set { namn = value;}
         }
 
         public override string ToString()
