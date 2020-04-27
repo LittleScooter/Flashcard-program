@@ -152,6 +152,11 @@ namespace Flashcards
             }
         }
 
+        //private void lbxDeckList_DoubleClick(object sender, MouseEventArgs e)
+        //{
+        //    gbxDeckMeny.Visible = false;
+        //}
+
         private void btnDelDeck_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Är du säker att du vill radera decket?", "", MessageBoxButtons.YesNo);
