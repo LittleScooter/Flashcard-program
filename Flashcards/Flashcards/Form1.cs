@@ -16,6 +16,7 @@ namespace Flashcards
 
         bool menyCheck;
         bool nyttDeckStart = false;
+        Deck selectedDeck;
 
         public Form1()
         {
@@ -35,18 +36,21 @@ namespace Flashcards
 
         private void btnStudera_Click(object sender, EventArgs e)
         {
+            //Meny managment
             lblTitel.Visible = false;
             btnStudera.Visible = false;
             btnVisaDeck.Visible = false;
             lbxDeckList.Visible = true;
             btnTillbaka.Visible = true;
             btnStudDeck.Visible = true;
+            //Meny managment
 
             menyCheck = true;
         }
 
         private void btnTillbaka_Click(object sender, EventArgs e)
         {
+            //Meny managment
             lblTitel.Visible = true;
             btnStudera.Visible = true;
             btnVisaDeck.Visible = true;
@@ -54,22 +58,26 @@ namespace Flashcards
             lbxDeckList.Visible = false;
             btnTillbaka.Visible = false;
             btnStudDeck.Visible = false;
+            //Meny managment
         }
 
         private void btnVisaDeck_Click(object sender, EventArgs e)
         {
+            //Meny managment
             lblTitel.Visible = false;
             btnStudera.Visible = false;
             btnVisaDeck.Visible = false;
             gbxDeckMeny.Visible = true;
             lbxDeckList.Visible = true;
             btnTillbaka.Visible = true;
+            //Meny managment
 
             menyCheck = false;
         }
 
         private void btnNyttDeck_Click(object sender, EventArgs e)
         {
+            //Meny managment
             gbxDeckRed.Visible = true;
             lblDeckNamn.Visible = true;
             tbxDeckNamn.Visible = true;
@@ -83,6 +91,7 @@ namespace Flashcards
             tbxKortFråga.Visible = false;
             tbxKortSvar.Visible = false;
             btnAddKort4real.Visible = false;
+            //Meny managment
         }
 
         private void tbxDeckNamn_TextChanged(object sender, EventArgs e)
@@ -99,15 +108,18 @@ namespace Flashcards
             }
             else
             {
+                //Meny managment
                 gbxDeckRed.Visible = false;
                 gbxDeckMeny.Visible = true;
                 lbxDeckList.Visible = true;
                 btnTillbaka.Visible = true;
+                //Meny managment
             }
         }
 
         private void btnAddKort_Click(object sender, EventArgs e)
         {
+            //Meny managment
             gbxDeckMeny.Visible = false;
             lbxDeckList.Visible = false;
             btnTillbaka.Visible = false;
@@ -120,7 +132,11 @@ namespace Flashcards
             tbxKortFråga.Visible = true;
             tbxKortSvar.Visible = true;
             btnAddKort4real.Visible = true;
+            //Meny managment
+
+            selectedDeck = decks[lbxDeckList.SelectedIndex];
         }
+
 
         private void btnAddKort4real_Click(object sender, EventArgs e)
         {
@@ -133,9 +149,12 @@ namespace Flashcards
             }
             else
             {
-                nyttDeckStart = true;
+                //nyttDeckStart = true;
+                selectedDeck.kort.Add(new Kort(kortFråg, kortSvar)); //this code kinda gay
+                tbxKortFråga.Text = "";
+                tbxKortSvar.Text = "";
 
-                //Kolla igenom decket om korten har dubleter
+                
             }
         }
 
@@ -152,11 +171,6 @@ namespace Flashcards
             }
         }
 
-        //private void lbxDeckList_DoubleClick(object sender, MouseEventArgs e)
-        //{
-        //    gbxDeckMeny.Visible = false;
-        //}
-
         private void btnDelDeck_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Är du säker att du vill radera decket?", "", MessageBoxButtons.YesNo);
@@ -164,6 +178,7 @@ namespace Flashcards
             {
                 decks.RemoveAt(lbxDeckList.SelectedIndex);
                 UpdateListbox();
+                //ta bort från listan
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -173,12 +188,19 @@ namespace Flashcards
 
         private void btnStudDeck_Click(object sender, EventArgs e)
         {
+            //Meny managment
             lbxDeckList.Visible = false;
             gbxDeckMeny.Visible = false;
             btnStudDeck.Visible = false;
             btnTillbaka.Visible = false;
+            gbxKortStud.Visible = true;
+            //Meny managment
 
-            //visa knappar och text for att studera
+            selectedDeck = decks[lbxDeckList.SelectedIndex];
+            selectedDeck.Start();
+            //du suger på att ge namn, blanda inte ihop dem
+            lblKortFråg.Text = selectedDeck.kortKö.Peek().fråga;
+            lblKorSvar.Text = selectedDeck.kortKö.Peek().svar;
         }
 
         private void btnSkapaDeck_Click(object sender, EventArgs e)
@@ -196,11 +218,41 @@ namespace Flashcards
 
                 UpdateListbox();
 
+                //Meny managment
                 gbxDeckRed.Visible = false;
                 gbxDeckMeny.Visible = true;
                 lbxDeckList.Visible = true;
                 btnTillbaka.Visible = true;
+                //Meny managment
             }
+        }
+
+        private void btnVisaSvar_Click(object sender, EventArgs e)
+        {
+            lblKorSvar.Visible = true;
+        }
+
+        private void btnFelSvar_Click(object sender, EventArgs e)
+        {
+            selectedDeck.Next(false);
+            UpdateQuestion();
+        }
+
+        private void btnRättSvar_Click(object sender, EventArgs e)
+        {
+            selectedDeck.Next(true);
+            UpdateQuestion();
+        }
+        private void UpdateQuestion()
+        {
+            if (selectedDeck.kortKö.Count == 0)
+            {
+                MessageBox.Show("Du är klar!");
+                return;
+            }
+            lblKorSvar.Visible = false;
+            lblKorSvar.Text = selectedDeck.kortKö.Peek().svar;
+            lblKortFråg.Text = selectedDeck.kortKö.Peek().fråga;
         }
     }
 }

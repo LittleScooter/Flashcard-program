@@ -48,8 +48,15 @@
             this.btnSkapaDeck = new System.Windows.Forms.Button();
             this.tbxDeckNamn = new System.Windows.Forms.TextBox();
             this.btnTillbakFrånKort = new System.Windows.Forms.Button();
+            this.lblKortFråg = new System.Windows.Forms.Label();
+            this.btnVisaSvar = new System.Windows.Forms.Button();
+            this.gbxKortStud = new System.Windows.Forms.GroupBox();
+            this.lblKorSvar = new System.Windows.Forms.Label();
+            this.btnRättSvar = new System.Windows.Forms.Button();
+            this.btnFelSvar = new System.Windows.Forms.Button();
             this.gbxDeckMeny.SuspendLayout();
             this.gbxDeckRed.SuspendLayout();
+            this.gbxKortStud.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStudera
@@ -223,7 +230,7 @@
             this.gbxDeckRed.Controls.Add(this.lblKortFråga);
             this.gbxDeckRed.Controls.Add(this.lblKortSvar);
             this.gbxDeckRed.Controls.Add(this.tbxKortSvar);
-            this.gbxDeckRed.Location = new System.Drawing.Point(59, 60);
+            this.gbxDeckRed.Location = new System.Drawing.Point(55, 72);
             this.gbxDeckRed.Name = "gbxDeckRed";
             this.gbxDeckRed.Size = new System.Drawing.Size(268, 135);
             this.gbxDeckRed.TabIndex = 10;
@@ -242,7 +249,7 @@
             // 
             // btnSkapaDeck
             // 
-            this.btnSkapaDeck.Location = new System.Drawing.Point(187, 94);
+            this.btnSkapaDeck.Location = new System.Drawing.Point(106, 94);
             this.btnSkapaDeck.Name = "btnSkapaDeck";
             this.btnSkapaDeck.Size = new System.Drawing.Size(75, 23);
             this.btnSkapaDeck.TabIndex = 14;
@@ -268,12 +275,81 @@
             this.btnTillbakFrånKort.UseVisualStyleBackColor = true;
             this.btnTillbakFrånKort.Click += new System.EventHandler(this.btnTillbakFrånKort_Click);
             // 
+            // lblKortFråg
+            // 
+            this.lblKortFråg.AutoSize = true;
+            this.lblKortFråg.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKortFråg.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblKortFråg.Location = new System.Drawing.Point(26, 45);
+            this.lblKortFråg.Name = "lblKortFråg";
+            this.lblKortFråg.Size = new System.Drawing.Size(82, 31);
+            this.lblKortFråg.TabIndex = 11;
+            this.lblKortFråg.Text = "Blank";
+            // 
+            // btnVisaSvar
+            // 
+            this.btnVisaSvar.Location = new System.Drawing.Point(140, 204);
+            this.btnVisaSvar.Name = "btnVisaSvar";
+            this.btnVisaSvar.Size = new System.Drawing.Size(75, 23);
+            this.btnVisaSvar.TabIndex = 12;
+            this.btnVisaSvar.Text = "Visa svar";
+            this.btnVisaSvar.UseVisualStyleBackColor = true;
+            this.btnVisaSvar.Click += new System.EventHandler(this.btnVisaSvar_Click);
+            // 
+            // gbxKortStud
+            // 
+            this.gbxKortStud.Controls.Add(this.lblKorSvar);
+            this.gbxKortStud.Controls.Add(this.btnRättSvar);
+            this.gbxKortStud.Controls.Add(this.btnFelSvar);
+            this.gbxKortStud.Controls.Add(this.lblKortFråg);
+            this.gbxKortStud.Controls.Add(this.btnVisaSvar);
+            this.gbxKortStud.Location = new System.Drawing.Point(12, 72);
+            this.gbxKortStud.Name = "gbxKortStud";
+            this.gbxKortStud.Size = new System.Drawing.Size(371, 325);
+            this.gbxKortStud.TabIndex = 13;
+            this.gbxKortStud.TabStop = false;
+            this.gbxKortStud.Text = "Studera";
+            this.gbxKortStud.Visible = false;
+            // 
+            // lblKorSvar
+            // 
+            this.lblKorSvar.AutoSize = true;
+            this.lblKorSvar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKorSvar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblKorSvar.Location = new System.Drawing.Point(26, 120);
+            this.lblKorSvar.Name = "lblKorSvar";
+            this.lblKorSvar.Size = new System.Drawing.Size(79, 31);
+            this.lblKorSvar.TabIndex = 15;
+            this.lblKorSvar.Text = "blank";
+            this.lblKorSvar.Visible = false;
+            // 
+            // btnRättSvar
+            // 
+            this.btnRättSvar.Location = new System.Drawing.Point(181, 238);
+            this.btnRättSvar.Name = "btnRättSvar";
+            this.btnRättSvar.Size = new System.Drawing.Size(75, 23);
+            this.btnRättSvar.TabIndex = 14;
+            this.btnRättSvar.Text = "Rätt";
+            this.btnRättSvar.UseVisualStyleBackColor = true;
+            this.btnRättSvar.Click += new System.EventHandler(this.btnRättSvar_Click);
+            // 
+            // btnFelSvar
+            // 
+            this.btnFelSvar.Location = new System.Drawing.Point(100, 238);
+            this.btnFelSvar.Name = "btnFelSvar";
+            this.btnFelSvar.Size = new System.Drawing.Size(75, 23);
+            this.btnFelSvar.TabIndex = 13;
+            this.btnFelSvar.Text = "Fel";
+            this.btnFelSvar.UseVisualStyleBackColor = true;
+            this.btnFelSvar.Click += new System.EventHandler(this.btnFelSvar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(394, 409);
+            this.ClientSize = new System.Drawing.Size(396, 409);
+            this.Controls.Add(this.gbxKortStud);
             this.Controls.Add(this.gbxDeckRed);
             this.Controls.Add(this.btnStudDeck);
             this.Controls.Add(this.btnTillbaka);
@@ -287,6 +363,8 @@
             this.gbxDeckMeny.ResumeLayout(false);
             this.gbxDeckRed.ResumeLayout(false);
             this.gbxDeckRed.PerformLayout();
+            this.gbxKortStud.ResumeLayout(false);
+            this.gbxKortStud.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +392,12 @@
         private System.Windows.Forms.TextBox tbxDeckNamn;
         private System.Windows.Forms.Button btnSkapaDeck;
         private System.Windows.Forms.Label lblDeckNamn;
+        private System.Windows.Forms.Label lblKortFråg;
+        private System.Windows.Forms.Button btnVisaSvar;
+        private System.Windows.Forms.GroupBox gbxKortStud;
+        private System.Windows.Forms.Label lblKorSvar;
+        private System.Windows.Forms.Button btnRättSvar;
+        private System.Windows.Forms.Button btnFelSvar;
     }
 }
 
