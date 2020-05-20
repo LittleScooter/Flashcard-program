@@ -178,7 +178,6 @@ namespace Flashcards
             {
                 decks.RemoveAt(lbxDeckList.SelectedIndex);
                 UpdateListbox();
-                //ta bort från listan
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -188,19 +187,27 @@ namespace Flashcards
 
         private void btnStudDeck_Click(object sender, EventArgs e)
         {
-            //Meny managment
-            lbxDeckList.Visible = false;
-            gbxDeckMeny.Visible = false;
-            btnStudDeck.Visible = false;
-            btnTillbaka.Visible = false;
-            gbxKortStud.Visible = true;
-            //Meny managment
-
             selectedDeck = decks[lbxDeckList.SelectedIndex];
-            selectedDeck.Start();
-            //du suger på att ge namn, blanda inte ihop dem
-            lblKortFråg.Text = selectedDeck.kortKö.Peek().fråga;
-            lblKorSvar.Text = selectedDeck.kortKö.Peek().svar;
+
+            if(selectedDeck.kort.Count >= 1)
+            {
+                //Meny managment
+                lbxDeckList.Visible = false;
+                gbxDeckMeny.Visible = false;
+                btnStudDeck.Visible = false;
+                btnTillbaka.Visible = false;
+                gbxKortStud.Visible = true;
+                //Meny managment
+
+                selectedDeck.Start();
+                //du suger på att ge namn, blanda inte ihop dem
+                lblKortFråg.Text = selectedDeck.kortKö.Peek().fråga;
+                lblKorSvar.Text = selectedDeck.kortKö.Peek().svar;
+            }
+            else
+            {
+                MessageBox.Show("Du måste lägga till kort i decket innan du kan studera");
+            }
         }
 
         private void btnSkapaDeck_Click(object sender, EventArgs e)
@@ -229,25 +236,51 @@ namespace Flashcards
 
         private void btnVisaSvar_Click(object sender, EventArgs e)
         {
+            //Meny managment
             lblKorSvar.Visible = true;
+            btnFelSvar.Visible = true;
+            btnRättSvar.Visible = true;
+            btnVisaSvar.Visible = false;
+            //Meny managment
         }
 
         private void btnFelSvar_Click(object sender, EventArgs e)
         {
+            //Meny managment
             selectedDeck.Next(false);
+            btnFelSvar.Visible = false;
+            btnRättSvar.Visible = false;
+            btnVisaSvar.Visible = true;
             UpdateQuestion();
+            //Meny managment
         }
 
         private void btnRättSvar_Click(object sender, EventArgs e)
         {
+            //Meny managment
             selectedDeck.Next(true);
+            btnFelSvar.Visible = false;
+            btnRättSvar.Visible = false;
+            btnVisaSvar.Visible = true;
             UpdateQuestion();
+            //Meny managment
         }
         private void UpdateQuestion()
         {
             if (selectedDeck.kortKö.Count == 0)
             {
                 MessageBox.Show("Du är klar!");
+                //Meny managment
+                gbxKortStud.Visible = false;
+                lblTitel.Visible = true;
+                btnStudera.Visible = true;
+                btnVisaDeck.Visible = true;
+                btnStudDeck.Visible = true;
+                btnTillbaka.Visible = true;
+                lblKorSvar.Visible = false;
+                btnStudDeck.Visible = false;
+                btnTillbaka.Visible = false;
+                //meny managment
                 return;
             }
             lblKorSvar.Visible = false;

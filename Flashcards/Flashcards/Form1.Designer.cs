@@ -230,7 +230,7 @@
             this.gbxDeckRed.Controls.Add(this.lblKortFråga);
             this.gbxDeckRed.Controls.Add(this.lblKortSvar);
             this.gbxDeckRed.Controls.Add(this.tbxKortSvar);
-            this.gbxDeckRed.Location = new System.Drawing.Point(55, 72);
+            this.gbxDeckRed.Location = new System.Drawing.Point(55, 112);
             this.gbxDeckRed.Name = "gbxDeckRed";
             this.gbxDeckRed.Size = new System.Drawing.Size(268, 135);
             this.gbxDeckRed.TabIndex = 10;
@@ -288,7 +288,7 @@
             // 
             // btnVisaSvar
             // 
-            this.btnVisaSvar.Location = new System.Drawing.Point(140, 204);
+            this.btnVisaSvar.Location = new System.Drawing.Point(140, 238);
             this.btnVisaSvar.Name = "btnVisaSvar";
             this.btnVisaSvar.Size = new System.Drawing.Size(75, 23);
             this.btnVisaSvar.TabIndex = 12;
@@ -318,9 +318,9 @@
             this.lblKorSvar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.lblKorSvar.Location = new System.Drawing.Point(26, 120);
             this.lblKorSvar.Name = "lblKorSvar";
-            this.lblKorSvar.Size = new System.Drawing.Size(79, 31);
+            this.lblKorSvar.Size = new System.Drawing.Size(121, 31);
             this.lblKorSvar.TabIndex = 15;
-            this.lblKorSvar.Text = "blank";
+            this.lblKorSvar.Text = "Blankare";
             this.lblKorSvar.Visible = false;
             // 
             // btnRättSvar
@@ -331,6 +331,7 @@
             this.btnRättSvar.TabIndex = 14;
             this.btnRättSvar.Text = "Rätt";
             this.btnRättSvar.UseVisualStyleBackColor = true;
+            this.btnRättSvar.Visible = false;
             this.btnRättSvar.Click += new System.EventHandler(this.btnRättSvar_Click);
             // 
             // btnFelSvar
@@ -341,6 +342,7 @@
             this.btnFelSvar.TabIndex = 13;
             this.btnFelSvar.Text = "Fel";
             this.btnFelSvar.UseVisualStyleBackColor = true;
+            this.btnFelSvar.Visible = false;
             this.btnFelSvar.Click += new System.EventHandler(this.btnFelSvar_Click);
             // 
             // Form1
@@ -348,7 +350,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(396, 409);
+            this.ClientSize = new System.Drawing.Size(398, 409);
             this.Controls.Add(this.gbxKortStud);
             this.Controls.Add(this.gbxDeckRed);
             this.Controls.Add(this.btnStudDeck);
