@@ -21,7 +21,7 @@ namespace Flashcards
         public Form1()
         {
             InitializeComponent();
-
+            UpdateDeckList();
             UpdateListbox();
         }
 
@@ -149,7 +149,6 @@ namespace Flashcards
             }
             else
             {
-                //nyttDeckStart = true;
                 selectedDeck.kort.Add(new Kort(kortFråg, kortSvar)); //this code kinda gay
                 tbxKortFråga.Text = "";
                 tbxKortSvar.Text = "";
@@ -286,6 +285,44 @@ namespace Flashcards
             lblKorSvar.Visible = false;
             lblKorSvar.Text = selectedDeck.kortKö.Peek().svar;
             lblKortFråg.Text = selectedDeck.kortKö.Peek().fråga;
+        }
+
+        private void btnSpara_Click(object sender, EventArgs e)
+        {
+            SparaDeckList();
+            MessageBox.Show("Samlingen har sparats");
+        }
+
+        private void SparaDeckList()
+        {
+            try
+            {
+                //int i = decks.items.count;
+                //object[] obj = new object[i];
+                //decks.Items.Copyto(obj, 0);
+
+                //FileDialog dialog = new SaveFileDialog();
+                //dialog.DefaultExt = "log";
+                //dialog.FileName = "decksamling";
+                //if (dialog.ShowDialog() == DialogResult.OK)
+                //{
+                //    using (System.IO.StreamWriter file = new
+                //    System.IO.StreamWriter(dialog.FileName))
+                //        foreach (string line in obj)
+                //        {
+                //            file.WriteLine(line);
+                //        }
+                //}
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("" + exp);
+            }
+        }
+
+        private void UpdateDeckList()
+        {
+            throw new NotImplementedException();
         }
     }
 }

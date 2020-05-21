@@ -54,6 +54,8 @@
             this.lblKorSvar = new System.Windows.Forms.Label();
             this.btnRättSvar = new System.Windows.Forms.Button();
             this.btnFelSvar = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.btnSpara = new System.Windows.Forms.Button();
             this.gbxDeckMeny.SuspendLayout();
             this.gbxDeckRed.SuspendLayout();
             this.gbxKortStud.SuspendLayout();
@@ -92,6 +94,7 @@
             // 
             // gbxDeckMeny
             // 
+            this.gbxDeckMeny.Controls.Add(this.btnSpara);
             this.gbxDeckMeny.Controls.Add(this.btnNyttDeck);
             this.gbxDeckMeny.Controls.Add(this.btnAddKort);
             this.gbxDeckMeny.Controls.Add(this.btnDelDeck);
@@ -105,7 +108,7 @@
             // 
             // btnNyttDeck
             // 
-            this.btnNyttDeck.Location = new System.Drawing.Point(6, 19);
+            this.btnNyttDeck.Location = new System.Drawing.Point(21, 19);
             this.btnNyttDeck.Name = "btnNyttDeck";
             this.btnNyttDeck.Size = new System.Drawing.Size(72, 23);
             this.btnNyttDeck.TabIndex = 3;
@@ -116,7 +119,7 @@
             // btnAddKort
             // 
             this.btnAddKort.Enabled = false;
-            this.btnAddKort.Location = new System.Drawing.Point(84, 19);
+            this.btnAddKort.Location = new System.Drawing.Point(99, 19);
             this.btnAddKort.Name = "btnAddKort";
             this.btnAddKort.Size = new System.Drawing.Size(72, 23);
             this.btnAddKort.TabIndex = 1;
@@ -127,7 +130,7 @@
             // btnDelDeck
             // 
             this.btnDelDeck.Enabled = false;
-            this.btnDelDeck.Location = new System.Drawing.Point(162, 19);
+            this.btnDelDeck.Location = new System.Drawing.Point(177, 19);
             this.btnDelDeck.Name = "btnDelDeck";
             this.btnDelDeck.Size = new System.Drawing.Size(86, 23);
             this.btnDelDeck.TabIndex = 0;
@@ -345,6 +348,16 @@
             this.btnFelSvar.Visible = false;
             this.btnFelSvar.Click += new System.EventHandler(this.btnFelSvar_Click);
             // 
+            // btnSpara
+            // 
+            this.btnSpara.Location = new System.Drawing.Point(269, 19);
+            this.btnSpara.Name = "btnSpara";
+            this.btnSpara.Size = new System.Drawing.Size(75, 23);
+            this.btnSpara.TabIndex = 4;
+            this.btnSpara.Text = "Spara";
+            this.btnSpara.UseVisualStyleBackColor = true;
+            this.btnSpara.Click += new System.EventHandler(this.btnSpara_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -400,6 +413,8 @@
         private System.Windows.Forms.Label lblKorSvar;
         private System.Windows.Forms.Button btnRättSvar;
         private System.Windows.Forms.Button btnFelSvar;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button btnSpara;
     }
 }
 
