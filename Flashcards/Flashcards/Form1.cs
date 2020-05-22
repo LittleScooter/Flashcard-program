@@ -359,12 +359,11 @@ namespace Flashcards
 
         }
 
-        private void TaEmotDeck(byte[] bytes) // skickar in bytes som du har fått över nätverk
+        private void TaEmotDeck(MemoryStream stream) // skickar in bytes som du har fått över nätverk
         {
             IFormatter formatter = new BinaryFormatter();
 
-            MemoryStream stream = new MemoryStream();
-            stream.Write(bytes, 0, bytes.Length);
+            
             Deck deck = (Deck)formatter.Deserialize(stream);
             decks.Add(deck);
             UpdateListbox();
@@ -404,15 +403,17 @@ namespace Flashcards
                 lyssnare = new TcpListener(IPAddress.Any, port);
                 lyssnare.Start();
                 TcpClient client = await lyssnare.AcceptTcpClientAsync();
-
-                byte[] lengthBuffer = new byte[4];
-                await client.GetStream().ReadAsync(lengthBuffer, 0, lengthBuffer.Length);
-                MemoryStream memoryStream = new MemoryStream(lengthBuffer);
-                BinaryReader reader = new BinaryReader(memoryStream);
-                int byteLength = reader.ReadInt32();
-                byte[] deckData = new byte[byteLength];
-                await client.GetStream().ReadAsync(deckData, 0, deckData.Length);
-                TaEmotDeck(deckData);
+                byte[] buffer = new byte[client.ReceiveBufferSize];
+                MessageBox.Show(client.ReceiveBufferSize.ToString());
+                await client.GetStream().ReadAsync(buffer, 0, buffer.Length);
+                MemoryStream memoryStream = new MemoryStream(buffer);
+                
+                
+                
+                
+                
+                
+                TaEmotDeck(memoryStream);
                 MessageBox.Show("It is recieved");
                 
             }
@@ -428,17 +429,9 @@ namespace Flashcards
             TcpClient client = new TcpClient();
             await client.ConnectAsync(ipAdress, port);
             byte[] bytes = SkickaDeck(decks[lbxDeckList.SelectedIndex]);
-        
-
-            MemoryStream memoryStream = new MemoryStream();
-            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-            binaryWriter.Write(bytes.Length);
+            client.ReceiveBufferSize = bytes.Length;
+            await client.GetStream().WriteAsync(bytes, 0, bytes.Length);
             
-            byte[] length = memoryStream.ToArray();
-
-            length = length.Concat(bytes).ToArray();
-
-            await client.GetStream().WriteAsync(length, 0, length.Length);
             MessageBox.Show("It is sent");
         }
     }
