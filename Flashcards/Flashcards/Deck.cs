@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Flashcards
 {
+    [Serializable]
     class Deck
     {
         public List<Kort> kort = new List<Kort>();

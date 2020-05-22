@@ -7,11 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Net;
+using System.Net.Sockets;
+using System.Linq;
 
 namespace Flashcards
 {
     public partial class Form1 : Form
     {
+        TcpListener lyssnare;
+        TcpClient klient;
+        int port = 12345;
+
         List<Deck> decks = new List<Deck>();
 
         bool menyCheck;
@@ -21,7 +31,7 @@ namespace Flashcards
         public Form1()
         {
             InitializeComponent();
-            UpdateDeckList();
+            LäsDeckList();
             UpdateListbox();
         }
 
@@ -39,6 +49,7 @@ namespace Flashcards
             //Meny managment
             lblTitel.Visible = false;
             btnStudera.Visible = false;
+            btnSkickaTaemot.Visible = false;
             btnVisaDeck.Visible = false;
             lbxDeckList.Visible = true;
             btnTillbaka.Visible = true;
@@ -52,6 +63,7 @@ namespace Flashcards
         {
             //Meny managment
             lblTitel.Visible = true;
+            btnSkickaTaemot.Visible = true;
             btnStudera.Visible = true;
             btnVisaDeck.Visible = true;
             gbxDeckMeny.Visible = false;
@@ -65,6 +77,7 @@ namespace Flashcards
         {
             //Meny managment
             lblTitel.Visible = false;
+            btnSkickaTaemot.Visible = false;
             btnStudera.Visible = false;
             btnVisaDeck.Visible = false;
             gbxDeckMeny.Visible = true;
@@ -272,6 +285,7 @@ namespace Flashcards
                 //Meny managment
                 gbxKortStud.Visible = false;
                 lblTitel.Visible = true;
+                btnSkickaTaemot.Visible = true;
                 btnStudera.Visible = true;
                 btnVisaDeck.Visible = true;
                 btnStudDeck.Visible = true;
@@ -290,29 +304,18 @@ namespace Flashcards
         private void btnSpara_Click(object sender, EventArgs e)
         {
             SparaDeckList();
-            MessageBox.Show("Samlingen har sparats");
+            MessageBox.Show("Sparat");
         }
 
         private void SparaDeckList()
         {
             try
             {
-                //int i = decks.items.count;
-                //object[] obj = new object[i];
-                //decks.Items.Copyto(obj, 0);
-
-                //FileDialog dialog = new SaveFileDialog();
-                //dialog.DefaultExt = "log";
-                //dialog.FileName = "decksamling";
-                //if (dialog.ShowDialog() == DialogResult.OK)
-                //{
-                //    using (System.IO.StreamWriter file = new
-                //    System.IO.StreamWriter(dialog.FileName))
-                //        foreach (string line in obj)
-                //        {
-                //            file.WriteLine(line);
-                //        }
-                //}
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream("deckSave", FileMode.OpenOrCreate, FileAccess.Write);
+                formatter.Serialize(stream, decks);
+                stream.Dispose();
+                
             }
             catch (Exception exp)
             {
@@ -320,9 +323,123 @@ namespace Flashcards
             }
         }
 
-        private void UpdateDeckList()
+        private void OnApplicationExit(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            SparaDeckList();
+        }
+
+        private void LäsDeckList()
+        {
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream("deckSave", FileMode.Open, FileAccess.Read);
+                decks = (List<Deck>)formatter.Deserialize(stream);
+                stream.Dispose();
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("" + exp);
+            }
+        }
+        private byte[] SkickaDeck(Deck deck)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            MemoryStream memoryStream = new MemoryStream();
+
+            formatter.Serialize(memoryStream, deck);
+            byte[] bytes = memoryStream.ToArray();
+            memoryStream.Dispose();
+            return bytes;
+            // Skicka byte array över nätverk
+        }
+
+        private async void SendNetworkData()
+        {
+
+        }
+
+        private void TaEmotDeck(byte[] bytes) // skickar in bytes som du har fått över nätverk
+        {
+            IFormatter formatter = new BinaryFormatter();
+
+            MemoryStream stream = new MemoryStream();
+            stream.Write(bytes, 0, bytes.Length);
+            Deck deck = (Deck)formatter.Deserialize(stream);
+            decks.Add(deck);
+            UpdateListbox();
+            stream.Dispose();
+        }
+
+        private void btnSkickaTaemot_Click(object sender, EventArgs e)
+        {
+            //meny managment
+            lblTitel.Visible = false;
+            btnStudera.Visible = false;
+            btnSkickaTaemot.Visible = false;
+            btnVisaDeck.Visible = false;
+            gbxSkickaHämta.Visible = true;
+            lbxDeckList.Visible = true;
+            //meny managment
+        }
+
+        private async void RecieveNetworkData()
+        {
+            try
+            {
+                klient = await lyssnare.AcceptTcpClientAsync();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message, Text);
+                return;
+            }
+            
+        }
+
+        private async void btnHämtaDeck_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lyssnare = new TcpListener(IPAddress.Any, port);
+                lyssnare.Start();
+                TcpClient client = await lyssnare.AcceptTcpClientAsync();
+
+                byte[] lengthBuffer = new byte[4];
+                await client.GetStream().ReadAsync(lengthBuffer, 0, lengthBuffer.Length);
+                MemoryStream memoryStream = new MemoryStream(lengthBuffer);
+                BinaryReader reader = new BinaryReader(memoryStream);
+                int byteLength = reader.ReadInt32();
+                byte[] deckData = new byte[byteLength];
+                await client.GetStream().ReadAsync(deckData, 0, deckData.Length);
+                TaEmotDeck(deckData);
+                MessageBox.Show("It is recieved");
+                
+            }
+            catch (Exception error) { MessageBox.Show(error.Message, Text); return; }
+            RecieveNetworkData();
+            
+        }
+
+        private async void btnSkickaDeck_Click(object sender, EventArgs e)
+        {
+            string ipAdress = "127.0.0.1";
+            IPAddress adress = IPAddress.Parse(ipAdress);
+            TcpClient client = new TcpClient();
+            await client.ConnectAsync(ipAdress, port);
+            byte[] bytes = SkickaDeck(decks[lbxDeckList.SelectedIndex]);
+        
+
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+            binaryWriter.Write(bytes.Length);
+            
+            byte[] length = memoryStream.ToArray();
+
+            length = length.Concat(bytes).ToArray();
+
+            await client.GetStream().WriteAsync(length, 0, length.Length);
+            MessageBox.Show("It is sent");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Flashcards
 {
+    [Serializable]
     class Kort
     {
         public string fråga;

@@ -32,6 +32,7 @@
             this.btnVisaDeck = new System.Windows.Forms.Button();
             this.lblTitel = new System.Windows.Forms.Label();
             this.gbxDeckMeny = new System.Windows.Forms.GroupBox();
+            this.btnSpara = new System.Windows.Forms.Button();
             this.btnNyttDeck = new System.Windows.Forms.Button();
             this.btnAddKort = new System.Windows.Forms.Button();
             this.btnDelDeck = new System.Windows.Forms.Button();
@@ -55,10 +56,16 @@
             this.btnRättSvar = new System.Windows.Forms.Button();
             this.btnFelSvar = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.btnSpara = new System.Windows.Forms.Button();
+            this.btnSkickaTaemot = new System.Windows.Forms.Button();
+            this.gbxSkickaHämta = new System.Windows.Forms.GroupBox();
+            this.btnHämtaDeck = new System.Windows.Forms.Button();
+            this.btnSkickaDeck = new System.Windows.Forms.Button();
+            this.tbxIpadress = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.gbxDeckMeny.SuspendLayout();
             this.gbxDeckRed.SuspendLayout();
             this.gbxKortStud.SuspendLayout();
+            this.gbxSkickaHämta.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStudera
@@ -105,6 +112,16 @@
             this.gbxDeckMeny.TabStop = false;
             this.gbxDeckMeny.Text = "Meny";
             this.gbxDeckMeny.Visible = false;
+            // 
+            // btnSpara
+            // 
+            this.btnSpara.Location = new System.Drawing.Point(269, 19);
+            this.btnSpara.Name = "btnSpara";
+            this.btnSpara.Size = new System.Drawing.Size(75, 23);
+            this.btnSpara.TabIndex = 4;
+            this.btnSpara.Text = "Spara";
+            this.btnSpara.UseVisualStyleBackColor = true;
+            this.btnSpara.Click += new System.EventHandler(this.btnSpara_Click);
             // 
             // btnNyttDeck
             // 
@@ -233,7 +250,7 @@
             this.gbxDeckRed.Controls.Add(this.lblKortFråga);
             this.gbxDeckRed.Controls.Add(this.lblKortSvar);
             this.gbxDeckRed.Controls.Add(this.tbxKortSvar);
-            this.gbxDeckRed.Location = new System.Drawing.Point(55, 112);
+            this.gbxDeckRed.Location = new System.Drawing.Point(57, 112);
             this.gbxDeckRed.Name = "gbxDeckRed";
             this.gbxDeckRed.Size = new System.Drawing.Size(268, 135);
             this.gbxDeckRed.TabIndex = 10;
@@ -348,28 +365,79 @@
             this.btnFelSvar.Visible = false;
             this.btnFelSvar.Click += new System.EventHandler(this.btnFelSvar_Click);
             // 
-            // btnSpara
+            // btnSkickaTaemot
             // 
-            this.btnSpara.Location = new System.Drawing.Point(269, 19);
-            this.btnSpara.Name = "btnSpara";
-            this.btnSpara.Size = new System.Drawing.Size(75, 23);
-            this.btnSpara.TabIndex = 4;
-            this.btnSpara.Text = "Spara";
-            this.btnSpara.UseVisualStyleBackColor = true;
-            this.btnSpara.Click += new System.EventHandler(this.btnSpara_Click);
+            this.btnSkickaTaemot.Location = new System.Drawing.Point(139, 265);
+            this.btnSkickaTaemot.Name = "btnSkickaTaemot";
+            this.btnSkickaTaemot.Size = new System.Drawing.Size(112, 40);
+            this.btnSkickaTaemot.TabIndex = 14;
+            this.btnSkickaTaemot.Text = "Skicka/ta emot";
+            this.btnSkickaTaemot.UseVisualStyleBackColor = true;
+            this.btnSkickaTaemot.Click += new System.EventHandler(this.btnSkickaTaemot_Click);
+            // 
+            // gbxSkickaHämta
+            // 
+            this.gbxSkickaHämta.Controls.Add(this.tbxIpadress);
+            this.gbxSkickaHämta.Controls.Add(this.btnSkickaDeck);
+            this.gbxSkickaHämta.Controls.Add(this.btnHämtaDeck);
+            this.gbxSkickaHämta.Location = new System.Drawing.Point(389, 12);
+            this.gbxSkickaHämta.Name = "gbxSkickaHämta";
+            this.gbxSkickaHämta.Size = new System.Drawing.Size(313, 54);
+            this.gbxSkickaHämta.TabIndex = 15;
+            this.gbxSkickaHämta.TabStop = false;
+            this.gbxSkickaHämta.Visible = false;
+            // 
+            // btnHämtaDeck
+            // 
+            this.btnHämtaDeck.Location = new System.Drawing.Point(6, 19);
+            this.btnHämtaDeck.Name = "btnHämtaDeck";
+            this.btnHämtaDeck.Size = new System.Drawing.Size(75, 23);
+            this.btnHämtaDeck.TabIndex = 0;
+            this.btnHämtaDeck.Text = "Hämta deck";
+            this.btnHämtaDeck.UseVisualStyleBackColor = true;
+            this.btnHämtaDeck.Click += new System.EventHandler(this.btnHämtaDeck_Click);
+            // 
+            // btnSkickaDeck
+            // 
+            this.btnSkickaDeck.Location = new System.Drawing.Point(87, 19);
+            this.btnSkickaDeck.Name = "btnSkickaDeck";
+            this.btnSkickaDeck.Size = new System.Drawing.Size(75, 23);
+            this.btnSkickaDeck.TabIndex = 1;
+            this.btnSkickaDeck.Text = "Skicka deck";
+            this.btnSkickaDeck.UseVisualStyleBackColor = true;
+            this.btnSkickaDeck.Click += new System.EventHandler(this.btnSkickaDeck_Click);
+            // 
+            // tbxIpadress
+            // 
+            this.tbxIpadress.Location = new System.Drawing.Point(168, 21);
+            this.tbxIpadress.Name = "tbxIpadress";
+            this.tbxIpadress.Size = new System.Drawing.Size(139, 20);
+            this.tbxIpadress.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(389, 374);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(398, 409);
-            this.Controls.Add(this.gbxKortStud);
+            this.ClientSize = new System.Drawing.Size(705, 409);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.gbxSkickaHämta);
+            this.Controls.Add(this.btnSkickaTaemot);
             this.Controls.Add(this.gbxDeckRed);
-            this.Controls.Add(this.btnStudDeck);
-            this.Controls.Add(this.btnTillbaka);
-            this.Controls.Add(this.lbxDeckList);
             this.Controls.Add(this.gbxDeckMeny);
+            this.Controls.Add(this.gbxKortStud);
+            this.Controls.Add(this.btnStudDeck);
+            this.Controls.Add(this.lbxDeckList);
+            this.Controls.Add(this.btnTillbaka);
             this.Controls.Add(this.lblTitel);
             this.Controls.Add(this.btnVisaDeck);
             this.Controls.Add(this.btnStudera);
@@ -380,6 +448,8 @@
             this.gbxDeckRed.PerformLayout();
             this.gbxKortStud.ResumeLayout(false);
             this.gbxKortStud.PerformLayout();
+            this.gbxSkickaHämta.ResumeLayout(false);
+            this.gbxSkickaHämta.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,6 +485,12 @@
         private System.Windows.Forms.Button btnFelSvar;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button btnSpara;
+        private System.Windows.Forms.Button btnSkickaTaemot;
+        private System.Windows.Forms.GroupBox gbxSkickaHämta;
+        private System.Windows.Forms.TextBox tbxIpadress;
+        private System.Windows.Forms.Button btnSkickaDeck;
+        private System.Windows.Forms.Button btnHämtaDeck;
+        private System.Windows.Forms.Button button1;
     }
 }
 
